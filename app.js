@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var fs=require('fs');
+
 
 var routes = require('./routes/index');
 
@@ -21,7 +23,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//注册根路由
 app.use('/', routes);
+//初始化路由
+initRoutes('./routes','/');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,3 +61,29 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
+//===============华丽的分割线======================
+
+//递归初始化路由
+function initRoutes(dirPath,urlPath){
+    console.log('开始搜索文件夹'+dirPath);
+    var files= fs.readdirSync(dirPath);
+    var reg=/^(.*)\.js$/i;
+    files.forEach(function(file){
+        var tempPath=dirPath+'/'+file;
+        var stats= fs.statSync(tempPath);
+        if(stats.isDirectory()){
+            var tempUrlPath=urlPath+file+'/';
+            initRoutes(tempPath,tempUrlPath);
+        }else {
+            if(reg.test(file)){
+                console.log('发现路由文件并尝试注册:'+dirPath+'/'+file);
+                var ph=RegExp.$1;
+                app.use(urlPath+ph,require(dirPath+'/'+ph));
+                console.log('注册路由成功:'+urlPath+ph);
+            }
+        }
+    });
+    console.log('注册路由完成,服务启动完成!');
+}
