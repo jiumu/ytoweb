@@ -85,5 +85,5 @@ function initRoutes(dirPath,urlPath){
             }
         }
     });
-    console.log('注册路由完成,服务启动完成!');
+    console.log('注册路由完成!');
 }
