@@ -12,9 +12,7 @@
     "express": "~4.13.4",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0",
-    "vue": "^1.0.26",
-    "vue-router": "^0.7.13"
+    "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.13.2",
@@ -32,6 +30,8 @@
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^8.5.3",
     "vue-style-loader": "^1.0.0",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "vue": "^1.0.26",
+    "vue-router": "^0.7.13"
   }
 }

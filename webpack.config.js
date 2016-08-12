@@ -7,7 +7,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     entry: { //入口配置文件
         main: ['./src/js/main.js'],
-        backmain: ['./src/js/backmain.js']
+        bg_main: ['./src/js/bg_main.js'],
+        vendor:['vue','vue-router']
     },
     output: {
         path: path.join(__dirname, 'public'),
@@ -42,6 +43,7 @@ module.exports = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common', //公共模块名称
+            chunks:['vendor'],
             filename: 'js/common.js'
         }),
         new ExtractTextPlugin('css/[name].css'), //提取css到单独文件使用link引入

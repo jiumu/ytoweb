@@ -1,6 +1,6 @@
 var Router=require('vue-router');
 Vue.use(Router);
-var bgApp=require('./bg-app.vue');
+var bgApp=require('./bg_app.vue');
 
 var router=new Router();
 
