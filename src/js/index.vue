@@ -30,7 +30,7 @@
 
 <script>
 	//var config=require('../config.json');
-	var modal = require('../components/modal.vue');
+	var modal = require('vue-bootstrap-modal');
 	export default {
 		data: function() {
 			return {

@@ -1,3 +1,17 @@
-require('../lib/bootstrap/css/bootstrap.min.css')
+var Router=require('vue-router');
+Vue.use(Router);
+var bgApp=require('./bg-app.vue');
 
-console.log('test');
+var router=new Router();
+
+router.map({
+   '/':{
+       component:function(resolve){
+           require(['./bg-index.vue'],resolve)
+       }
+   } 
+});
+
+
+
+router.start(bgApp,'#bgapp');

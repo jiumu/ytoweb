@@ -18,22 +18,21 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.vue$/,
-            loaders: ['vue']
+            loaders: ['vue-loader']
         }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
         }, {
             test: /\.(png|jpg|gif)$/,
             loader: 'url-loader?limit=81920&name=./img/[name].[ext]'
-        },
-            {
-                //文件加载器，处理文件静态资源
-                test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader?name=./fonts/[name].[ext]'
-            }, {
-                test: /\.json$/,
-                loader: 'json-loader'
-            }
+        }, {
+            //文件加载器，处理文件静态资源
+            test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: 'file-loader?name=./fonts/[name].[ext]'
+        }, {
+            test: /\.json$/,
+            loader: 'json-loader'
+        }
         ]
     },
     plugins: [
@@ -43,10 +42,10 @@ module.exports = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common', //公共模块名称
-            filename: 'common.js'
+            filename: 'js/common.js'
         }),
         new ExtractTextPlugin('css/[name].css'), //提取css到单独文件使用link引入
         new webpack.HotModuleReplacementPlugin() //热加载
     ]
-    
+
 };
