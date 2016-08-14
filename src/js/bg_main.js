@@ -1,3 +1,5 @@
+require('../lib/bootstrap/css/bootstrap.css');
+
 var Router=require('vue-router');
 Vue.use(Router);
 var bgApp=require('./bg_app.vue');

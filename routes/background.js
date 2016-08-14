@@ -2,21 +2,22 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy;
+var AdminUser=require('../models/AdminUser.js').AdminUserModel;
 
 passport.use('bg_local', new LocalStrategy(
     function (username, password, done) {
-        var user = {
-            id: '1',
-            username: 'admin',
-            password: 'admin'
-        }; // 可以配置通过数据库方式读取登陆账号
-        if (username !== user.username) {
-            return done(null, false, { message: '用户名错误' });
-        }
-        if (password !== user.password) {
-            return done(null, false, { message: '密码错误' });
-        }
-        return done(null, user);
+        AdminUser.findOne({username:username},function(err,user){
+            if(err){console.log(err);return done(err);}
+            if(!user){return done(null,false,{message:'没有此用户'});}
+            if (username !== user.username) {
+                return done(null, false, { message: '用户名错误' });
+            }
+            if (password !== user.password) {
+                return done(null, false, { message: '密码错误' });
+            }
+            return done(null, user);
+        }) // 可以配置通过数据库方式读取登陆账号
+
     }
 ));
 function isAuthenticated(req,res,next){
@@ -39,6 +40,8 @@ router.post('/singin',function(req,res,next){
         function(err,user,info){
             if(err) {return next(err);}
             if(!user){return res.render('bg_singin',{msg:info.message});}
+            user.lastLoginTime=new Date();
+            user.save();
             req.login(user,function(err){
                if(err) return next(err);
                 res.redirect('index');

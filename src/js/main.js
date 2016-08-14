@@ -1,3 +1,6 @@
+require('../lib/bootstrap/css/bootstrap.css');
+require('../css/main.css');
+
 var　Router = require('vue-router');
 var App=require('./app.vue');
 
