@@ -38,13 +38,13 @@
                 menus: [
                     {
                         text: '用户管理',
-                        url: '#'
+                        url: '/userManage'
                     }, {
                         text: '网址管理',
-                        url: '#'
+                        url: '/siteManage'
                     }, {
                         text: '软件管理',
-                        url: '#'
+                        url: '/softManage'
                     }
                 ]
             }

@@ -7,18 +7,16 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 var session = require('express-session');
 var flash = require('express-flash');
-var passport = require('passport');
 var routes = require('./routes/index');
-
+var passport = require('passport');
+var app = express();
+var passportStrategy=require('./common/passportStrategy.js');
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
-
 passport.deserializeUser(function (user, done) {
     done(null, user);
 });
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -1,29 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport')
-    , LocalStrategy = require('passport-local').Strategy;
+var RestResult=require('../dataTypes/RestResult.js');
+var passport=require('passport');
+var passportStrategy=require('../common/passportStrategy');
 var AdminUser=require('../models/AdminUser.js').AdminUserModel;
+var SiteInfoModel=require('../models/SiteInfo').SiteInfoModel;
 
-passport.use('bg_local', new LocalStrategy(
-    function (username, password, done) {
-        AdminUser.findOne({username:username},function(err,user){
-            if(err){console.log(err);return done(err);}
-            if(!user){return done(null,false,{message:'没有此用户'});}
-            if (username !== user.username) {
-                return done(null, false, { message: '用户名错误' });
-            }
-            if (password !== user.password) {
-                return done(null, false, { message: '密码错误' });
-            }
-            return done(null, user);
-        }) // 可以配置通过数据库方式读取登陆账号
-
-    }
-));
+//权限检查
 function isAuthenticated(req,res,next){
     if(req.isAuthenticated()) return next();
+    if(req.xhr){
+        var restResult=new RestResult();
+        restResult.errorCode=RestResult.AUTH_ERROR;
+        restResult.returnValue='认证错误,未登录或无相应权限';
+        res.json(restResult);
+    }
     res.redirect('/background/singin');
 }
+
 
 /* GET home page. */
 router.get('/singin', function(req, res, next) {
@@ -36,7 +30,7 @@ router.get('/singin', function(req, res, next) {
 
 
 router.post('/singin',function(req,res,next){
-    passport.authenticate('bg_local',
+    passport.authenticate(passportStrategy.bg_local,
         function(err,user,info){
             if(err) {return next(err);}
             if(!user){return res.render('bg_singin',{msg:info.message});}
@@ -44,12 +38,23 @@ router.post('/singin',function(req,res,next){
             user.save();
             req.login(user,function(err){
                if(err) return next(err);
-                res.redirect('index');
+                res.redirect('/background');
             });
         })(req,res,next);
 });
 router.all('/*',isAuthenticated);
-router.get('/index',function(req,res,next){
+router.get('/',function(req,res,next){
     res.render('bg_index',{title:'后台管理'});
 });
+
+router.get('/api/getsiteinfo',function(req,res,next){
+    SiteInfoModel.find(function(err,sites){
+        if(err){return next(err);}
+        var restResult=new RestResult();
+        restResult.errorCode=RestResult.NO_ERROR;
+        restResult.returnValue='查询成功';
+        restResult.returnValue=sites;
+        res.json(restResult);
+    })
+})
 module.exports = router;
