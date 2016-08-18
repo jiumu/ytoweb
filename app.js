@@ -9,6 +9,8 @@ var session = require('express-session');
 var flash = require('express-flash');
 var routes = require('./routes/index');
 var passport = require('passport');
+var RestResult=require('./dataTypes/RestResult.js');
+
 var app = express();
 var passportStrategy=require('./common/passportStrategy.js');
 passport.serializeUser(function (user, done) {
@@ -71,6 +73,12 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
+    if(req.xhr){
+        var restResult=new RestResult();
+        restResult.errorCode=RestResult.SERVER_EXCEPTION_ERROR;
+        restResult.errorReason='服务器未知错误,请联系开发人员';
+        res.json(restResult);
+    }
     res.render('error', {
         message: err.message,
         error: {}
