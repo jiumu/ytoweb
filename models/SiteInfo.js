@@ -9,6 +9,6 @@ var SiteInfoSchema = new base.Schema({
     url:String
 });
 
-var SiteInfoModel=base.mongoose.model('SiteInfoModel',SiteInfoSchema,'siteInfos');
+var SiteInfoModel=base.mongoose.model('SiteInfoModel',SiteInfoSchema,'siteInfoes');
 
 exports.SiteInfoModel=SiteInfoModel;

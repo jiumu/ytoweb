@@ -2,6 +2,8 @@ require('../css/main.css');
 
 var　Router = require('vue-router');
 var App=require('./app.vue');
+var vueResource=require('vue-resource');
+Vue.use(vueResource);
 
 Vue.use(Router);
 //引入视图组件
@@ -22,6 +24,11 @@ router.map({//注册路由
     '/sitenav':{
         component:function(resolve){
             require(['./sitenav.vue'],resolve)
+        }
+    },
+    '/downloadSoft':{
+        component:function(resolve){
+            require(['./downloadSoft.vue'],resolve)
         }
     },
     //登录页面

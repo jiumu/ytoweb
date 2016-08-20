@@ -6,7 +6,7 @@
 
         <table class="table table-striped table-bordered table-hover">
             <thead>
-            <tr class='text-center bg-info'>
+            <tr>
                 <th class='text-center bg-info'>text</th>
                 <th class='text-center bg-info'>title</th>
                 <th class='text-center bg-info'>url</th>

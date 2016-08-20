@@ -77,6 +77,7 @@ app.use(function (err, req, res, next) {
         var restResult=new RestResult();
         restResult.errorCode=RestResult.SERVER_EXCEPTION_ERROR;
         restResult.errorReason='服务器未知错误,请联系开发人员';
+        restResult.returnValue=err;
         res.json(restResult);
     }
     res.render('error', {

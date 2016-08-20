@@ -37,6 +37,9 @@
 					text:'网址导航',
 					url:'/sitenav'
 				},{
+					text:'软件下载',
+					url:'/downloadSoft'
+				},{
 					text: '关于我们',
 					url: '#'
 				}, {

@@ -93,6 +93,16 @@
 					}
 				]
 			}
+		},
+		ready:function(){
+			this.$http.get('/api/siteinfo/list')
+					.then(function(result){
+						if(result.data.errorCode==0){
+							this.sites=result.data.returnValue;
+						}else{
+							alert(result.data.errorReason);
+						}
+					})
 		}
 	}
 </script>
