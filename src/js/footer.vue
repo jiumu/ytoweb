@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<div class="footer">
+		<div class="footer" id='footer'>
 			<div class="footer-warpper">
 				<p>
 				©2016&nbsp;川藏管理区IT部&nbsp;
@@ -19,9 +19,12 @@
 		bottom:23px;
 		max-width:800px;
 		margin-top:30px;
-		position:absolute;
 		left:0;
 		right: 0;
+		position:absolute;
+	}
+	.position{
+
 	}
 	.footer-warpper{
 		color:#fff;
@@ -32,3 +35,7 @@
 		padding:15px;
 	}
 </style>
+
+<script>
+
+</script>

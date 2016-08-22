@@ -6,7 +6,10 @@ var base = require('./Base.js');
 var SoftInfoSchema= new base.Schema({
     text:String,
     url:String,
-    downloadCount:Number
+    downloadCount:{
+        type:Number,
+        default:0
+    }
 })
 
 

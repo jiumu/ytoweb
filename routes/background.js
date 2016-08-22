@@ -8,13 +8,11 @@ var SiteInfoModel = require('../models/SiteInfo').SiteInfoModel;
 var SoftInfoModel = require('../models/SoftInfo').SoftInfoModel;
 //权限检查
 function isAuthenticated(req, res, next) {
-    if (req.user) {
-        AdminUser.findOne({username: req.user.username}, function (err, user) {
-            if (user.username === req.user.username && user.password === req.user.password) {
+    if (req.isAuthenticated()) {
                 return next();
-            }
-        });
-    }
+
+        }
+
     if (req.xhr) {
         var restResult = new RestResult();
         restResult.errorCode = RestResult.AUTH_ERROR;
@@ -52,7 +50,8 @@ router.post('/singin', function (req, res, next) {
             });
         })(req, res, next);
 });
-//router.all('/*',isAuthenticated);
+//需登录操作
+router.all('/*',isAuthenticated);
 router.get('/', function (req, res, next) {
     res.render('bg_index', {title: '后台管理'});
 });
@@ -185,7 +184,14 @@ router.post('/api/softInfo/save', function (req, res, next) {
     });
 });
 router.post('/api/softinfo/delete', function (req, res, next) {
-
+    var id=req.body._id;
+    if(id){
+        SoftInfoModel.remove({_id:id},function(err){
+            if(err)return next(err);
+            var rest=new RestResult();
+            res.json(rest);
+        })
+    }
 });
 
 module.exports = router;

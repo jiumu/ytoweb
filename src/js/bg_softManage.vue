@@ -99,7 +99,15 @@
                 this.show = true;
             },
             delete: function (id) {
-
+                this.$http.post('/background/api/softInfo/delete',{
+                    _id:id
+                }).then(function(result){
+                    if(result.data.errorCode==0){
+                        this.initData();
+                    }else{
+                        alert(result.data.errorReason);
+                    }
+                })
             },
             ok: function () {
                 var soft = this.singleSoftInfo;
